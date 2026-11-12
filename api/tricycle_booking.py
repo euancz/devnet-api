@@ -11,6 +11,9 @@ rides = [
 ]
  
  ## Endpoint 1 
+@tricycle_booking.route('/rides', methods=['GET'])
+def get_rides():
+    return jsonify(rides), 200
 
 
 
