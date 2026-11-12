@@ -15,28 +15,14 @@ rides = [
 def get_rides():
     return jsonify(rides), 200
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  ## endpoint 2
+@tricycle_booking.route("/rides/<int:ride_id>", methods=["GET"])
+def get_ride(ride_id):
+    for ride in rides:
+        if ride["id"] == ride_id:
+            return jsonify(ride)
 
+    return jsonify({"error": "Ride not found"}), 404
 
 
 
