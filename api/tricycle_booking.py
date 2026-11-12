@@ -9,11 +9,14 @@ rides = [
     {"id": 4,"name": "Berto", "pickup": "Madapdap", "dropoff": "Bundagul", "status": "Completed"},
     {"id": 5,"name": "Jipre", "pickup": "Xevera", "dropoff": "Tabun", "status": "Pending"},
 ]
- 
+
+
  ## Endpoint 1 
 @tricycle_booking.route('/rides', methods=['GET'])
 def get_rides():
     return jsonify(rides), 200
+
+
 
  ## endpoint 2
 @tricycle_booking.route("/rides/<int:ride_id>", methods=["GET"])
@@ -21,54 +24,17 @@ def get_ride(ride_id):
     for ride in rides:
         if ride["id"] == ride_id:
             return jsonify(ride)
-
     return jsonify({"error": "Ride not found"}), 404
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  # endpoint 3
-
 @tricycle_booking.route("/rides", methods=["POST"])
 def book_ride():
     data = request.get_json(silent=True) or {}
-
     for field in ["name", "pickup", "dropoff"]:
         if not data.get(field):
             return jsonify({"error": "Missing required fields"}), 400
-
     new_booking = {
         "id": max([ride["id"] for ride in rides], default=0) + 1,
         "name": data["name"],
@@ -76,34 +42,34 @@ def book_ride():
         "dropoff": data["dropoff"],
         "status": "Pending"
     }
-
     rides.append(new_booking)
-
     return jsonify(new_booking), 201
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  # endpoint 4
- 
+@tricycle_booking.route("/rides/<int:ride_id>", methods=["PUT"])
+def edit_ride(ride_id):
+    data = request.get_json(silent=True) or {}
+    for ride in rides:
+        if ride["id"] == ride_id:
+            for field in ["name", "pickup", "dropoff", "status"]:
+                if data.get(field):
+                    ride[field] = data[field]
+            return jsonify(ride), 200
+    return jsonify({"error": "Ride not found"}), 404
+
+
+
+ # endpoint 5
+@tricycle_booking.route("/rides/<int:ride_id>", methods=["DELETE"])
+def delete_ride(ride_id):
+    for ride in rides:
+        if ride["id"] == ride_id:
+            rides.remove(ride)
+            return jsonify({"message": f"Ride {ride_id} deleted"}), 200
+    return jsonify({"error": "Ride not found"}), 404
+
+
+if __name__ == "__main__":
+    tricycle_booking.run(debug=True, port=5555)
