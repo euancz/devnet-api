@@ -72,4 +72,4 @@ def delete_ride(ride_id):
 
 
 if __name__ == "__main__":
-    tricycle_booking.run(debug=True, port=5555)
+    tricycle_booking.run(debug=True, port=5000)
