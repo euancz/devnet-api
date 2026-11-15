@@ -62,6 +62,15 @@ def update_status(ride_id):
 
 
 
+# endpoint 5
+@tricycle_booking.route("/rides/<int:ride_id>", methods=["DELETE"])
+def delete_ride(ride_id):
+    for ride in rides:
+        if ride["id"] == ride_id:
+            rides.remove(ride)
+            return jsonify({"message": f"Ride {ride_id} deleted"}), 200
+    return jsonify({"error": "Ride not found"}), 404
+
 
 if __name__ == "__main__":
     tricycle_booking.run(debug=True, port=8800)
