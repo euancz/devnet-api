@@ -47,7 +47,8 @@ def book_ride():
 
 
 
- # endpoint 4
+
+# endpoint 4
 @tricycle_booking.route("/rides/<int:ride_id>", methods=["PUT"])
 def edit_ride(ride_id):
     data = request.get_json(silent=True) or {}
@@ -71,5 +72,5 @@ def delete_ride(ride_id):
     return jsonify({"error": "Ride not found"}), 404
 
 
-if __name__ == "__main__":
-    tricycle_booking.run(debug=True, port=5000)
+if __name__ == "__main_":
+    tricycle_booking.run(debug=True, port=8800)
