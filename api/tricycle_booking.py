@@ -72,5 +72,5 @@ def delete_ride(ride_id):
     return jsonify({"error": "Ride not found"}), 404
 
 
-if __name__ == "__main_":
+if __name__ == "__main__":
     tricycle_booking.run(debug=True, port=8800)
