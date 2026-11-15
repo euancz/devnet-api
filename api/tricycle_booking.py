@@ -48,28 +48,8 @@ def book_ride():
 
 
  # endpoint 4
-@tricycle_booking.route("/rides/<int:ride_id>", methods=["PUT"])
-def edit_ride(ride_id):
-    data = request.get_json(silent=True) or {}
-    for ride in rides:
-        if ride["id"] == ride_id:
-            for field in ["name", "pickup", "dropoff", "status"]:
-                if data.get(field):
-                    ride[field] = data[field]
-            return jsonify(ride), 200
-    return jsonify({"error": "Ride not found"}), 404
+
 
 
 
  # endpoint 5
-@tricycle_booking.route("/rides/<int:ride_id>", methods=["DELETE"])
-def delete_ride(ride_id):
-    for ride in rides:
-        if ride["id"] == ride_id:
-            rides.remove(ride)
-            return jsonify({"message": f"Ride {ride_id} deleted"}), 200
-    return jsonify({"error": "Ride not found"}), 404
-
-
-if __name__ == "__main__":
-    tricycle_booking.run(debug=True, port=5000)
